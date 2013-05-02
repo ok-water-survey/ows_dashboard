@@ -1,0 +1,126 @@
+<html>
+<head>
+<script type="text/javascript" src="http://static.cybercommons.org/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.flot.js"></script>
+<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.flot.time.js"></script>
+<script type="text/javascript" src="http://static.cybercommons.org/css/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="http://static.cybercommons.org/js/flot/jquery.flot.resize.min.js"></script>-->
+</head>
+<style>
+.placeholder{
+    width:400px;
+    height:300px;
+    margin:5px;
+}
+.xAxis > .tickLabel 
+{
+    margin-top:40px;
+    -moz-transform:rotate(-90deg);
+    -o-transform:rotate(-90deg);
+    -webkit-transform:rotate(-90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+</style>
+<script>
+$(document).ready( function() {
+    jQuery.extend({
+        parseQuerystring: function() {
+            var nvpair = {};
+            var qs = window.location.search.replace('?', '');
+            var pairs = qs.split('&');
+            $.each(pairs, function(i, v) {
+                var pair = v.split('=');
+                nvpair[pair[0]] = pair[1];
+            });
+            return nvpair;
+        }
+    });
+    var qs = $.parseQuerystring();
+    //11090203,11090204,11090106,11090103,11090201,11090202
+    //gw 72019
+    //stream discharge 00060 gage height ft 00065
+    $('#impair').append("<iframe style='height:1200px;width:100%' src='http://iaspub.epa.gov/tmdl_waters10/attains_watershed.control?p_huc=" + qs.huc + "&p_state=OK&p_cycle=&p_report_type=T'/>");
+    setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00060&siteType=ST','#combGraph','#title','#labeler');
+    setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00065&siteType=ST','#combGraph1','#title1','#labeler1');
+    setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=72019','#combGraph2','#title2','#labeler2');
+  function setpage(url,flotdiv,titlediv,labeldiv){
+    var options = {
+            grid: { hoverable: true, clickable: true },
+            lines: {show: true},
+            points: {show: true},
+            xaxis: { mode:"time",timeformat: "%m/%d/%y %H:%M "},
+            yaxis:{invert:true},
+            legend:{container: $('#labeler') }
+        };
+    $.getJSON('http://test.oklahomawatersurvey.org/data/proxy/?url='.concat(encodeURIComponent(url)).concat('&callback=?'),function(fdata){
+        var comb=[];
+        var variable;
+        var sitename;
+        $.each( fdata.value.timeSeries, function( key, value ) {
+            variable = value.variable.variableDescription;
+            sitename = value.sourceInfo.siteName;
+            var flotdiv='placeholder'+ key;
+            if(value.values[0].value !== undefined){
+                var data={label:sitename,data:[]}
+                $.each(value.values[0].value, function (key, val){
+                    var dt=new Date(val.dateTime)
+                    data.data.push([dt,parseFloat(val.value)])
+                });
+            }else{
+                var data={label:sitename,data:null}
+            }
+            comb.push(data);
+        });
+        $(titlediv).append(variable);
+        options.legend={container: $(labeldiv) }
+        $.plot(flotdiv, comb, options);
+    });
+
+  }
+});
+</script>
+<body>
+<h3>Streamflow</h3>
+<div style="float:left;width:50%;"id='output'>
+  <div style="margin-top:3px;width:100%; display: table;">
+    <div style="display:table-header-group" id='title'></div>
+    <div style="display: table-row;width:100%;height:100%">
+      <div style="width: 50%; display: table-cell;"> 
+         <div id="combGraph" class="placeholder"></div>
+      </div>
+      <div style="width:50%;display:table-cell;vertical-align:middle;">
+         <div style="" id='labeler'></div>
+      </div>
+    </div>
+  </div>
+<h5 style="margin-top:35px;">Gage Height</h5>
+  <!--This is the next table-->
+  <div style="margin-top:10px;width:100%; display: table;">
+      <div style="display:table-header-group" id='title1'></div>
+      <div style="display: table-row;width:100%;height:100%">
+        <div style="width: 50%; display: table-cell;">
+           <div id="combGraph1" class="placeholder"></div>
+        </div>
+        <div style="width:50%;display:table-cell;vertical-align:middle;">
+           <div style="" id='labeler1'></div>
+        </div>
+      </div>
+  </div>
+ <h3 style="margin-top:35px;">Groundwater Levels</h3>
+  <!--This is the next table-->
+    <div style="width:100%;display:table;">
+        <div style="display:table-header-group" id='title2'></div>
+        <div style="display: table-row;width:100%;height:100%">
+          <div style="width: 50%; display: table-cell;">
+             <div id="combGraph2" class="placeholder"></div>
+          </div>
+          <div style="width:50%;display:table-cell;vertical-align:middle;">
+             <div style="" id='labeler2'></div>
+          </div>
+        </div>
+    </div>
+</div><!--end-->
+<div style="float:right;width:49%;height:100%" id="impair"></div>
+<!--<iframe style="float:right;width:49%;height:100%" src='http://iaspub.epa.gov/tmdl_waters10/attains_watershed.control?p_huc=11090203&p_cycle=&p_report_type=T'/>-->
+</body>
+</html>
