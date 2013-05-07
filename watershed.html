@@ -70,7 +70,7 @@ $(document).ready( function() {
     //11090203,11090204,11090106,11090103,11090201,11090202
     //gw 72019
     //stream discharge 00060 gage height ft 00065
-			$('#impair').append("<iframe width='500px' height='300px' frameborder='0' src='http://watersgeo.epa.gov/mwm/mwmlite.html?layer=LEGACY_WBD&feature=" + qs.huc +"'/>"); 
+			$('#impair').append("<iframe width='900px' height='400px' frameborder='0' src='http://watersgeo.epa.gov/mwm/mwmlite.html?layer=LEGACY_WBD&feature=" + qs.huc +"'/>"); 
     setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00060&siteType=ST','#combGraph','#title','#labeler');
     setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00065&siteType=ST','#combGraph1','#title1','#labeler1');
     setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=72019','#combGraph2','#title2','#labeler2');
@@ -148,6 +148,23 @@ $(document).ready( function() {
 		</ul>-->
 
 			<div id="content" class="container_16 clearfix">
+			
+			<div class="grid_6">
+
+					<div class="box">
+					
+					<h2>Watershed Map</h2>
+<table>
+<tbody>
+<tr>
+<div style="padding: auto, margin: auto, width: 100%" id="impair"></div>
+
+</tr>
+</tbody>
+</table>
+</div>						
+						</div>
+						
 				<div class="grid_5">
 					<div class="box">
 
@@ -171,10 +188,10 @@ $(document).ready( function() {
 					</div>
 					</tr></tbody></table>
 </div>
+</div>
 
 
-
-
+<div class="grid_5">
 					<div class="box">
 
 <h2>Gage Height</h2>
@@ -195,7 +212,8 @@ $(document).ready( function() {
 					</tr></tbody></table>
 </div>
 
-
+</div>
+<div class="grid_5">
 
 					<div class="box">
 
@@ -218,21 +236,7 @@ $(document).ready( function() {
 </div>
 
 						</div>	
-<div class="grid_5">
 
-					<div class="box">
-					
-					<h2>Watershed Map</h2>
-<table>
-<tbody>
-<tr>
-<div id="impair"></div>
-
-</tr>
-</tbody>
-</table>
-</div>						
-						</div>
 						
 						
 							</div>
