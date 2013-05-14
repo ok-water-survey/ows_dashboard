@@ -3,10 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>OWS Dashboard</title>
-		<link rel="stylesheet" href="css/960.css" type="text/css" media="screen" charset="utf-8" />
-		<link rel="stylesheet" href="css/template.css" type="text/css" media="screen" charset="utf-8" />
-		<link rel="stylesheet" href="css/colour.css" type="text/css" media="screen" charset="utf-8" />
+		<title>Oklahoma Water Survey | Dashboard</title>
+		<link rel="stylesheet" href="css/ows_dashboard.css" type="text/css" media="screen" charset="utf-8" />
 		<!--[if IE]><![if gte IE 6]><![endif]-->
 		<script src="js/glow/1.7.0/core/core.js" type="text/javascript"></script>
 		<script src="js/glow/1.7.0/widgets/widgets.js" type="text/javascript"></script>
@@ -24,14 +22,11 @@
 			});
 		</script>
 		
-		
-<link rel="stylesheet" href="graph.css">
-<script type="text/javascript" src="http://static.cybercommons.org/js/jquery-1.7.2.min.js"></script>
-<!--<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.flot.js"></script>-->
-<script type="text/javascript" src="jquery.flot.js"></script>
-<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.flot.time.js"></script>
-<script type="text/javascript" src="http://static.cybercommons.org/css/bootstrap/js/bootstrap.min.js"></script>
-<!--<script type="text/javascript" src="http://static.cybercommons.org/js/flot/jquery.flot.resize.min.js"></script>-->
+
+		<script type="text/javascript" src="http://static.cybercommons.org/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/flot/jquery.flot.js"></script>
+		<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.flot.time.js"></script>
+		<script type="text/javascript" src="http://static.cybercommons.org/css/bootstrap/js/bootstrap.min.js"></script>
 		<!--[if IE]><![endif]><![endif]-->
 	</head>
 
@@ -125,9 +120,13 @@ $(document).ready( function() {
 			if (previousPoint != item.dataIndex) {
 				previousPoint = item.dataIndex;
 				$('#tooltip').remove();
+
 				var x = item.datapoint[0],
-					y = item.datapoint[1];
-					showTooltip(item.pageX, item.pageY, y + ' on ' + x );
+					y = item.datapoint[1].toFixed(2),
+					//date = new Date(x + (5 * 60 * 60 * 1000));
+					date = new Date(x);
+					//date.format('dddd, MMMM ,yyyy');
+					showTooltip(item.pageX, item.pageY, y + ' on ' + date );
 			}
 		} else {
 			$('#tooltip').remove();
@@ -149,7 +148,7 @@ $(document).ready( function() {
 
 			<div id="content" class="container_16 clearfix">
 			
-			<div class="grid_6">
+			<div class="grid_1">
 
 					<div class="box">
 					
@@ -165,7 +164,7 @@ $(document).ready( function() {
 </div>						
 						</div>
 						
-				<div class="grid_5">
+				<div class="grid_2">
 					<div class="box">
 
 <h2>Streamflow</h2>
@@ -191,7 +190,7 @@ $(document).ready( function() {
 </div>
 
 
-<div class="grid_5">
+<div class="grid_2">
 					<div class="box">
 
 <h2>Gage Height</h2>
@@ -213,7 +212,7 @@ $(document).ready( function() {
 </div>
 
 </div>
-<div class="grid_5">
+<div class="grid_2">
 
 					<div class="box">
 
@@ -249,4 +248,7 @@ $(document).ready( function() {
 			</div>
 		</div>-->
 	</body>
+	
+	
+
 </html>

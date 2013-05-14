@@ -1,0 +1,566 @@
+/* Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,
+blockquote,pre,a,abbr,acronym,address,big,cite,code,del,
+dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,
+sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,
+form,label,legend,table,caption,tbody,tfoot,thead,tr,th,
+td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+body{line-height:1}
+ol,ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}
+ins{text-decoration:none}
+del{text-decoration:line-through}
+table{border-collapse:collapse;border-spacing:0}
+
+/*default text*/
+body, textarea{color:#333;font:13px/1.5 'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif}
+a:focus{outline:1px dotted}
+hr{border:0 #ccc solid;border-top-width:1px;clear:both;height:0}
+h1{font-size:25px}
+h2{font-size:23px}
+h3{font-size:21px}
+h4{font-size:19px}
+h5{font-size:17px}
+h6{font-size:15px}
+ol{list-style:decimal}
+ul{list-style:disc}
+li{margin-left:30px}
+p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address,fieldset{margin-bottom:20px}
+
+/* Fixes width issues with form elements in the grid. */
+.grid_1 select,.grid_1 input,.grid_1 textarea{width:30px}.grid_1 select{width:40px}
+.grid_2 select,.grid_2 input,.grid_2 textarea{width:90px}.grid_2 select{width:100px}
+
+
+/* Make sure form elements don't break the box width */
+.grid_1 > .box select,.grid_1 > .box input,.grid_1 > .box textarea{width:8px;}
+.grid_2 > .box select,.grid_2 > .box input,.grid_2 > .box textarea{width:68px;}
+
+
+/* container */
+.container_16 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 1200px;
+	}
+
+/*grid global*/	
+.grid_1,
+.grid_2 {
+	display: inline;
+	/*float: left;*/
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/* `Grid >> Children (Alpha ~ First, Omega ~ Last) */
+
+.alpha {
+	margin-left: 0;
+}
+
+.omega {
+	margin-right: 0;
+}
+
+/* `Grid >> 16 Columns */
+
+.container_16 .grid_1, 
+.container_16 .grid_1 .box,
+.container_16 .grid_1 .glow-sortable-dropindicator {
+	width: 900px !important
+}
+
+.container_16 .grid_2, 
+.container_16 .grid_2 .box,
+.container_16 .grid_2 .glow-sortable-dropindicator {
+	width: 650px !important
+}
+
+
+
+
+/*clearing float*/
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+.clearfix:after {
+	clear: both;
+	content: ' ';
+	display: block;
+	font-size: 0;
+	line-height: 0;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
+/* ----------- Template for movable box -------*/
+/* change here for template modification ---*/
+
+.center {
+	text-align:center;
+}
+
+ol {
+	padding:10px;
+	margin:0;
+}
+
+caption {
+	padding:4px;
+}
+
+/* Common */
+
+#content {
+	margin-right:auto;
+	margin-left:auto;
+	width:1000px;
+}
+
+.login {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.login > div {
+	width:360px !important;
+}
+
+#content {
+	width:1200px;
+	position:relative;
+	zoom:1;
+}
+
+.date td a {
+	display:inline-block;
+	padding:3px 8px;
+}
+
+.date th, .date td {
+	text-align:center;
+	padding:3px;
+}
+
+/* Box */
+
+.box {
+	width: 600px;
+	font-size:13px;
+	margin:0 0 10px 0;
+	position:relative;
+	border:1px solid;
+}
+
+.box h2, .box p, .box table {
+	margin:0;
+}
+
+.box h2 {
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	padding:2px 10px;
+	cursor:move;
+}
+
+.utils a {
+	width:100%;
+	position:absolute;
+	top:5px;
+	right:10px;
+	border:1px solid;
+	padding:4px 8px;
+}
+
+.box p {
+	padding:10px;
+}
+
+/* Typography */
+
+label, #navigation, .error, .success, input[type="submit"], input[type="reset"]  {
+	font-weight:bold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	border-bottom:1px solid;
+}
+
+a:hover {
+	text-decoration:none;
+}
+
+a.edit, a.delete {
+	padding-left:25px;
+	background-repeat:no-repeat;
+	background-position:left center;
+}
+a {
+	padding:4px;
+}
+
+/* Table styling */
+
+table {
+	width:100%;
+}
+
+th, td {
+	padding:7px 15px;
+	text-align:left;
+}
+
+/* Header */
+
+#head {
+	-moz-border-radius-topright:10px;
+	border:0;
+	margin:10px auto 0 auto;
+	padding:5px 30px;
+	width:80%;
+}
+
+/* Nagivation */
+
+#navigation {
+	-moz-border-radius-bottomleft:10px;
+	margin:0 auto 10px auto;
+	padding:10px 30px;
+	width:940px;
+}
+
+#navigation > li {
+	display:inline;
+	margin:0
+}
+
+#navigation > li > a, #navigation > li > span {
+	display:inline-block;
+	padding:5px 10px;
+	text-decoration:none;
+}
+
+/* Content */
+
+#content {
+	padding:30px;
+	width: 80%;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-bottomright: 10px;
+}
+
+#foot {
+	padding:5px 30px;
+	width:940px;
+	margin:10px auto;
+	-moz-border-radius-topright: 10px;
+	-moz-border-radius-bottomleft: 10px;
+}
+
+.curved, #navigation a, #navigation span, .error, .success, .box, .utils a {
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+}
+
+.curved-alt, input, textarea, select, .box, .date td a, .utils a  {
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-topleft:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-top-left-radius:5px;
+}
+/* Forms */
+
+label {
+	display:block;
+	font-size:17px;
+	margin:0 0 5px;
+	position:relative;
+}
+
+small {
+	font-size:12px;
+	font-weight:normal;
+	padding-left:10px;
+}
+
+input, textarea, select{
+	border:1px solid;
+	font-family:inherit;
+	font-size:inherit;
+	padding:4px;
+}
+
+select {
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+input[type="submit"], input[type="reset"] {
+	cursor:pointer;
+	width:auto !important;
+}
+
+/* Error and Success messages */
+.error, .success {
+	padding:4px 8px;
+}
+
+/* Pagination */
+.pagination {
+	text-align:right;
+}
+.pagination a, .pagination span {
+	display:inline-block;
+	margin:0 2px;
+	padding:2px 6px;
+}
+
+/* -------- template end ----*/
+/* ----------- from colour css ---*/
+body {
+	background:#F7F4E9 url(body.png) repeat-x top center;
+}
+small {
+	color:#888
+}
+
+th,#navigation,.active,input[type=submit],.pagination a:hover,.date td a:hover {
+	background:#434A48;
+	color:#fff
+}
+
+select, textarea, input, td, #content, #foot {
+	background:#fff url(gradient.png) repeat-x 0 -28px
+}
+tr {
+	background-position:0 -18px;
+}
+#content {
+	background-position:0 1px;
+}
+
+.active, th, #head, #navigation a, input[type=submit] {
+	color:#fff;
+}
+
+input, select, textarea {
+	border-color:#ddd
+}
+
+h1,h2,h3,h4,h5,h6 {
+	border-color:#ddd
+}
+
+a {
+	color:#888
+}
+a.edit {
+	background-image:url(edit.png)
+}
+a.delete {
+	background-image:url(trash.png)
+}
+
+#head {
+	background:#313230
+}
+
+#navigation a:hover {
+	background:#383E3C
+}
+#navigation .active {
+	background:#687370
+}
+
+.box,.box > .utils a {
+	background:#fff;
+	border-color:#eee
+}
+.box > h2 {
+	background:url(box-h2.png) repeat-x bottom center #fff
+}
+
+.error,.success,.info,.error a,.success a,.info a {
+	color:#fff
+}
+.error {
+	background:#901830
+}
+.success {
+	background:#C2EFC2
+}
+
+.glow-sortable-dropindicator {
+	background:#eee
+}
+
+/* -- colour css end--- */
+/* --------- graph css for mouseover display -----*/
+/* Resets */
+.graph-container,
+.graph-container div,
+.graph-container a,
+.graph-container span {
+	margin: 0;
+	padding: 0;
+}
+
+/* Gradinet and Rounded Corners */
+.graph-container, #tooltip, .graph-info a {
+	background: #ffffff;
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f9f9f9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f9f9f9));
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f9f9f9 100%);
+	background: -o-linear-gradient(top,  #ffffff 0%,#f9f9f9 100%);
+	background: -ms-linear-gradient(top,  #ffffff 0%,#f9f9f9 100%);
+	background: linear-gradient(to bottom,  #ffffff 0%,#f9f9f9 100%);
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+/*  Graph Container */
+.graph-container {
+	position: relative;
+	width: 550px;
+	height: 300px;
+	padding: 20px;
+	
+	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+	-moz-box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+	box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+}
+
+.graph-container > div {
+	position: absolute;
+	width: inherit;
+	height: inherit;
+	top: 10px;
+	left: 25px;
+}
+
+.graph-info {
+	width: 590px;
+	margin-bottom: 10px;
+}
+
+/* Text Styles */
+#tooltip, .graph-info a {
+	height: 20px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 20px;
+	color: #646464;
+}
+
+.tickLabel {
+	font-weight: bold;
+	font-size: 12px;
+	color: #666;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Tooltip */
+#tooltip {
+	position: absolute;
+	display: none;
+	padding: 5px 10px;
+	border: 1px solid #e1e1e1;
+}
+
+/* Links */
+.graph-info a {
+	position: relative;
+	display: inline-block;
+	float: left;
+	padding: 7px 10px 5px 30px;
+	margin-right: 10px;
+	text-decoration: none;
+	cursor: default;
+}
+
+/* Color Circle for Links */
+.graph-info a:before {
+	position: absolute;
+	display: block;
+	content: '';
+	width: 8px;
+	height: 8px;
+	top: 13px;
+	left: 13px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/* Colors For each Link */
+.graph-info .visitors { border-bottom: 2px solid #71c73e; }
+.graph-info .returning { border-bottom: 2px solid #77b7c5; }
+
+.graph-info .visitors:before { background: #71c73e; }
+.graph-info .returning:before { background: #77b7c5; }
+
+/* Lines & Bars Buttons */
+#lines, #bars {
+	width: 34px;
+	height: 32px;
+	padding: 0;
+	margin-right: 0;
+	margin-left: 10px;
+	border-bottom: 2px solid #71c73e;
+	float: right;
+	cursor: pointer;
+}
+
+#lines.active, #bars.active {
+	background: #82d344;
+	background: -moz-linear-gradient(top,  #82d344 0%, #71c73e 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#82d344), color-stop(100%,#71c73e));
+	background: -webkit-linear-gradient(top,  #82d344 0%,#71c73e 100%);
+	background: -o-linear-gradient(top,  #82d344 0%,#71c73e 100%);
+	background: -ms-linear-gradient(top,  #82d344 0%,#71c73e 100%);
+	background: linear-gradient(to bottom,  #82d344 0%,#71c73e 100%);
+}
+
+#lines span, #bars span {
+	display: block;
+	width: 34px;
+	height: 32px;
+	background: url('../img/lines.png') no-repeat 9px 12px;
+}
+
+#bars span { background: url('../img/bars.png') no-repeat center 10px; }
+
+#lines.active span { background-image: url('../img/lines_active.png'); }
+#bars.active span { background-image: url('../img/bars_active.png'); }
+
+/* Hide the First and Last Y Label */
+.yAxis .tickLabel:first-child,
+.yAxis .tickLabel:last-child { display: none; }
+
+/* Clear Floats */
+.graph-info:before, .graph-info:after,
+.graph-container:before, .graph-container:after {
+	content: '';
+	display: block;
+	clear: both;
+}
