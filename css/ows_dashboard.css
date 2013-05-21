@@ -4,7 +4,7 @@ blockquote,pre,a,abbr,acronym,address,big,cite,code,del,
 dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,
 sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,
 form,label,legend,table,caption,tbody,tfoot,thead,tr,th,
-td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline}
 body{line-height:1}
 ol,ul{list-style:none}
 blockquote,q{quotes:none}
@@ -31,25 +31,26 @@ p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address,fieldset{margin-bottom:20px}
 /* Fixes width issues with form elements in the grid. */
 .grid_1 select,.grid_1 input,.grid_1 textarea{width:30px}.grid_1 select{width:40px}
 .grid_2 select,.grid_2 input,.grid_2 textarea{width:90px}.grid_2 select{width:100px}
-
+.grid_map select,.grid_map input,.grid_map textarea{width:90px}.grid_map select{width:100px}
 
 /* Make sure form elements don't break the box width */
 .grid_1 > .box select,.grid_1 > .box input,.grid_1 > .box textarea{width:8px;}
 .grid_2 > .box select,.grid_2 > .box input,.grid_2 > .box textarea{width:68px;}
-
+.grid_map > .box select,.grid_map > .box input,.grid_map > .box textarea{width:68px;}
 
 /* container */
 .container_16 {
 	margin-left: auto;
 	margin-right: auto;
-	width: 1200px;
+	width: 100%;
 	}
 
 /*grid global*/	
 .grid_1,
-.grid_2 {
+.grid_2 ,
+.grid_map{
 	display: inline;
-	/*float: left;*/
+	float: left;
 	margin-left: 5px;
 	margin-right: 5px;
 }
@@ -69,13 +70,19 @@ p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address,fieldset{margin-bottom:20px}
 .container_16 .grid_1, 
 .container_16 .grid_1 .box,
 .container_16 .grid_1 .glow-sortable-dropindicator {
-	width: 900px !important
+	width: 950px !important
 }
 
 .container_16 .grid_2, 
 .container_16 .grid_2 .box,
 .container_16 .grid_2 .glow-sortable-dropindicator {
 	width: 650px !important
+}
+
+.container_16 .grid_map, 
+.container_16 .grid_map .box,
+.container_16 .grid_map .glow-sortable-dropindicator {
+	width: 1500px !important
 }
 
 
@@ -127,7 +134,9 @@ caption {
 #content {
 	margin-right:auto;
 	margin-left:auto;
-	width:1000px;
+	width:100%;
+	position:relative;
+	zoom:1;
 }
 
 .login {
@@ -139,11 +148,7 @@ caption {
 	width:360px !important;
 }
 
-#content {
-	width:1200px;
-	position:relative;
-	zoom:1;
-}
+
 
 .date td a {
 	display:inline-block;
@@ -223,6 +228,7 @@ table {
 th, td {
 	padding:7px 15px;
 	text-align:left;
+	border: 0;
 }
 
 /* Header */
@@ -232,7 +238,7 @@ th, td {
 	border:0;
 	margin:10px auto 0 auto;
 	padding:5px 30px;
-	width:80%;
+	width:100%;
 }
 
 /* Nagivation */
@@ -259,7 +265,7 @@ th, td {
 
 #content {
 	padding:30px;
-	width: 80%;
+	width: 100%;
 	-moz-border-radius-topleft: 10px;
 	-moz-border-radius-bottomright: 10px;
 }
@@ -334,9 +340,7 @@ input[type="submit"], input[type="reset"] {
 
 /* -------- template end ----*/
 /* ----------- from colour css ---*/
-body {
-	background:#F7F4E9 url(body.png) repeat-x top center;
-}
+
 small {
 	color:#888
 }
@@ -346,7 +350,7 @@ th,#navigation,.active,input[type=submit],.pagination a:hover,.date td a:hover {
 	color:#fff
 }
 
-select, textarea, input, td, #content, #foot {
+select, textarea, input, #content, #foot {
 	background:#fff url(gradient.png) repeat-x 0 -28px
 }
 tr {
@@ -564,3 +568,69 @@ a.delete {
 	display: block;
 	clear: both;
 }
+
+/*series switches */
+#overviewLegend {
+    margin-left: 10px;
+}
+
+#overviewLegend li > div {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+#overviewLegend li label {
+    margin-left: 3px;
+}
+
+
+
+#impaired_content table,td, tr{
+width:950px;
+border: 1px solid black;
+}
+#impaired_content a.metadata 
+{   
+	color:#cccccc;
+	cursor:help;	
+}
+ 
+#impaired_content a.description 
+{   
+	color:#006699;
+	cursor:help;
+	text-align:center;
+	display: block; 	
+}
+ 
+#impaired_content .left
+{ float:left; }
+ 
+#impaired_content .center
+{ 
+	text-align:center;
+	margin-top:0;
+ }
+#impaired_content table.center 
+{ 
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+ 
+#impaired_content tr.top
+{
+	vertical-align: top;
+	text-align: center;
+}
+#impaired_content tr.threatened
+{	background: #FFFFC1 }
+ 
+#impaired_content tr.impaired
+{	background: #c0c0c0 }
+ 
+#impaired_content tr.partial
+{	background: #FFC7A0 }
+ 
+#impaired_content tr.unassessed
+{	background: #EEEEEE }
