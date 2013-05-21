@@ -69,10 +69,11 @@ $(document).ready( function() {
     //11090203,11090204,11090106,11090103,11090201,11090202
     //gw 72019
     //stream discharge 00060 gage height ft 00065
-	$('#watershedMap').append("<iframe width='1500px' height='500px' frameborder='0' src='http://watersgeo.epa.gov/mwm/mwmlite.html?layer=LEGACY_WBD&feature=" + qs.huc +"'/>"); 
+	$('#watershedMap').append("<div><iframe width='700px' height='300px' frameborder='0' src='http://watersgeo.epa.gov/mwm/mwmlite.html?layer=LEGACY_WBD&feature=" + qs.huc +"'/><div id='blockClick' style='position: absolute; top: 0; left: 0; width: 700px; height: 300px'></div></div>"); 
     setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00060&siteType=ST','#combGraph','#title','#labeler');
     setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00065&siteType=ST','#combGraph1','#title1','#labeler1');
     setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=72019','#combGraph2','#title2','#labeler2');
+	
   function setpage(url,flotdiv,titlediv,labeldiv){
     var options = {
             grid: { hoverable: true, clickable: true },
@@ -191,13 +192,37 @@ function openWin(fileName, windowName,display) {
 
 
 
-		<script>
-		$(document).ready(function(){ 
-if ( $("#title1").contents().length == 0) {
-    $("#error1").show();
-}
-else{
-            $("#error1").hide();}})
+<script>
+  $(document).ready( function() {
+    jQuery.extend({
+          parseQuerystring: function() {
+              var nvpair = {};
+              var qs = window.location.search.replace('?', '');
+              var pairs = qs.split('&');
+              $.each(pairs, function(i, v) {
+                  var pair = v.split('=');
+                  nvpair[pair[0]] = pair[1];
+              });
+              return nvpair;
+          }
+      });
+      var qs = $.parseQuerystring();
+  $.getJSON("http://test.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{'spec':{'properties.HUC':'"+ qs.huc +"'},'fields':['properties']}".concat('?callback=?'), function(wsdata){
+
+		var totalAcres = 0;
+
+		
+		for (var i in wsdata) { totalAcres += wsdata[i].properties.ACRES; }
+        output = "<b>HUC:</b> " + wsdata[0].properties.HUC + "<br>";
+		output += "<b>Name:</b> " + wsdata[0].properties.NAME + "<br>";
+		output += "<b>Total Acreage:</b> " + totalAcres.toFixed(0) + " Acres <br>";
+		
+        document.getElementById("wsInfo").innerHTML=output;
+  });
+
+  });
+
+
 </script>
 
 </head>
@@ -205,11 +230,6 @@ else{
 
 		<h1 id="head">Oklahoma Water Survey Dashboard</h1>
 		
-		<!--<ul id="navigation">
-			<li><span class="active">Tab1</span></li>
-			<li><a href="#">Tab2</a></li>
-			<li><a href="#">Tab3</a></li>
-		</ul>-->
 
 			<div id="content" class="container_16 clearfix">
 			
@@ -228,44 +248,45 @@ else{
 </table>
 </div>						
 						</div>
-						<div class="grid_1">
+									<div class="grid_wsInfo">
 
 					<div class="box">
+					
+					<h2>Watershed Summary</h2>
+<table>
+<tbody>
+<tr>
+<div style="padding: 10px; margin: auto; width: 100%" id="wsInfo"></div>
 
-					<h2>Impaired Value</h2>
-
-<div id="impaired_content" style="width:100%;"></div>
-
-
-
-
+</tr>
+</tbody>
+</table>
 </div>						
 						</div>
-						
-				<div class="grid_2">
+						<div class="grid_2">
 					<div class="box">
 
 <h2>Streamflow</h2>
 						<table>
 							<tbody>
 								<tr>
-<div style="float:left;width:100%;"id='output'>
-  <div style="margin-top:3px;width:100%; display: table;">
+
+  <div style="margin-top:10px;width:100%; display: table;">
     <div style="display:table-header-group" id='title'></div>
     <div style="display: table-row;width:100%;height:100%">
-      <div style="width: 50%; display: table-cell;"> 
+      <div style="width: 70%; display: table-cell;"> 
          <div id="combGraph" class="placeholder"></div>
       </div>
-      <div style="width:50%;display:table-cell;vertical-align:middle">
-         <div style="width:200px; border:0px;" id='labeler'></div>
+      <div style="width:30%;display:table-cell;vertical-align:middle">
+         <div style="font-size: 10px; " id='labeler'></div>
       </div>
     </div>
   </div>
 
 					</tr></tbody></table>
-</div>
-</div>
 
+</div>
+</div>
 
 <div class="grid_2">
 					<div class="box">
@@ -274,17 +295,18 @@ else{
 						<table>
 							<tbody>
 								<tr>
-  <div style="margin-top:10px;width:100%; display: table;">
+
+  <div style="margin-top:10px;width:100%; display: table; border: 0px">
       <div id="title1"></div>
 	  		   
-      <div style="display: table-row;width:100%;height:100%">
-        <div style="width: 50%; display: table-cell;">
+      <div style="display: table-row;width:100%;height:100%;border:0px">
+        <div style="width: 70%; display: table-cell;">
            <div id="combGraph1" class="placeholder"></div>
 
 
         </div>
-        <div style="width:50%;display:table-cell;vertical-align:middle;">
-           <div style="" id='labeler1'></div>
+        <div style="width:30%;display:table-cell;vertical-align:middle">
+           <div style="font-size: 10px;" id='labeler1'></div>
         </div>
       </div>
   </div>
@@ -303,11 +325,11 @@ else{
 <div style="width:100%;display:table;">
         <div style="display:table-header-group" id='title2'></div>
         <div style="display: table-row;width:100%;height:100%">
-          <div style="width: 50%; display: table-cell;">
+          <div style="width: 70%; display: table-cell;">
              <div id="combGraph2" class="placeholder"></div>
 			 
           </div>
-          <div style="width:50%;display:table-cell;vertical-align:middle;">
+          <div style="width:30%;display:table-cell;vertical-align:middle;">
              <div style="" id='labeler2'></div>
           </div>
         </div>
@@ -316,6 +338,22 @@ else{
 </div>
 
 						</div>	
+						<div class="grid_1">
+
+					<div class="box">
+
+
+					<h2>Impaired Value</h2>
+
+<div id="impaired_content" style="width:100%; align: left"></div>
+
+
+
+
+</div>						
+						</div>
+						
+				
 
 						
 						
