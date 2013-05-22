@@ -219,8 +219,25 @@ function openWin(fileName, windowName,display) {
 		
         document.getElementById("wsInfo").innerHTML=output;
   });
+    $.getJSON("http://test.oklahomawatersurvey.org/tools/cropland/"+ qs.huc +"/".concat('?callback=?'), function(cldata){
 
+		cloutput = "<ol><li><b>" + cldata[0].crop +"<b>: " + cldata[0].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[1].crop +"<b>: " + cldata[1].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[2].crop +"<b>: " + cldata[2].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[3].crop +"<b>: " + cldata[3].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[4].crop +"<b>: " + cldata[4].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[5].crop +"<b>: " + cldata[5].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[6].crop +"<b>: " + cldata[6].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[7].crop +"<b>: " + cldata[7].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[8].crop +"<b>: " + cldata[8].percent_watershed.toFixed(2) +" % <br></li>";
+		cloutput += "<li><b>" + cldata[9].crop +"<b>: " + cldata[9].percent_watershed.toFixed(2) +" % <br></li></ol>";
+		document.getElementById("clInfo").innerHTML=cloutput;
+		});
+		
+        
   });
+
+  
 
 
 </script>
@@ -335,6 +352,22 @@ function openWin(fileName, windowName,display) {
         </div>
     </div>
 					</tr></tbody></table>
+</div>
+
+						</div>	
+						<div class="grid_2">
+
+					<div class="box">
+
+<h2>Top 10 Land Cover Type</h2>
+						<table>
+<tbody>
+<tr>
+<div style="padding: 10px; margin: auto; width: 100%" id="clInfo"></div>
+
+</tr>
+</tbody>
+</table>
 </div>
 
 						</div>	
