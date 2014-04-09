@@ -45,7 +45,7 @@ $(function(){
             map.zoomToMaxExtent = function () {
 			map.setCenter(center, 6);	//re-center if globe clicked
 			};
-	$.getJSON('http://test.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{"spec":{"properties.HUC":"'+qs.huc+'"}}', function (fdata) {
+	$.getJSON('http://data.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{"spec":{"properties.HUC":"'+qs.huc+'"}}', function (fdata) {
 		
 		var in_options = {'internalProjection': map.projection, 'externalProjection': map.projection};
 		var geojson_format = new OpenLayers.Format.GeoJSON(in_options);
