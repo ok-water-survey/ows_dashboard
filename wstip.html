@@ -25,11 +25,11 @@ $(document).ready( function() {
  var qs = $.parseQuerystring(); 
  
  var img = document.createElement("IMG");
-	img.src = "http://test.oklahomawatersurvey.org/d2/images/wsimg/"+qs.huc+".jpg";
+	img.src = "http://data.oklahomawatersurvey.org/d2/images/wsimg/"+qs.huc+".jpg";
 	document.getElementById('wsimage').appendChild(img);
 
  
-$.getJSON("http://test.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{'spec':{'properties.HUC':'"+ qs.huc +"'},'fields':['properties']}".concat('?callback=?'), function(wsdata){
+$.getJSON("http://data.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{'spec':{'properties.HUC':'"+ qs.huc +"'},'fields':['properties']}".concat('?callback=?'), function(wsdata){
 
 		var totalAcres = 0;
 

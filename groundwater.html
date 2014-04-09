@@ -77,7 +77,7 @@ setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&s
 			}
            	//legend:{container: $('#labeler'),hideable:true }
         };
-    $.getJSON('http://test.oklahomawatersurvey.org/data/proxy/?url='.concat(encodeURIComponent(url)).concat('&callback=?'),function(fdata){
+    $.getJSON('http://data.oklahomawatersurvey.org/data/proxy/?url='.concat(encodeURIComponent(url)).concat('&callback=?'),function(fdata){
 
 	
 	var comb=[];
@@ -169,7 +169,7 @@ var theInput2 = document.getElementById('datepicker2');
 
 
 dateSelect.onsubmit = function(e) {
-    var myurl = "http://test.oklahomawatersurvey.org/dashboard/groundwater.html?huc="+qs.huc+"&start="+ encodeURIComponent(theInput1.value) +"&end="+ encodeURIComponent(theInput2.value) ;
+    var myurl = "http://data.oklahomawatersurvey.org/dashboard/groundwater.html?huc="+qs.huc+"&start="+ encodeURIComponent(theInput1.value) +"&end="+ encodeURIComponent(theInput2.value) ;
 window.history.pushState('', "Title", myurl);
 window.location.reload();
     return false;

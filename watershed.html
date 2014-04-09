@@ -106,7 +106,7 @@ $(document).ready( function() {
             yaxis:{invert:true},
             legend:{container: $('#labeler') }
         };
-    $.getJSON('http://test.oklahomawatersurvey.org/data/proxy/?url='.concat(encodeURIComponent(url)).concat('&callback=?'),function(fdata){
+    $.getJSON('http://data.oklahomawatersurvey.org/data/proxy/?url='.concat(encodeURIComponent(url)).concat('&callback=?'),function(fdata){
         var comb=[];
         var variable;
         var sitename;
@@ -213,7 +213,7 @@ $(document).ready( function() {
           }
       });
       var qs = $.parseQuerystring();
-    $.getJSON("http://test.oklahomawatersurvey.org/mongo/db_find/ows/impaired_waters/{'spec':{'huc':'" + qs.huc +"'}}".concat('?callback=?'),function(fdata){
+    $.getJSON("http://data.oklahomawatersurvey.org/mongo/db_find/ows/impaired_waters/{'spec':{'huc':'" + qs.huc +"'}}".concat('?callback=?'),function(fdata){
         for (var i in fdata) { 
         if (fdata[i].tmdl_year == 2006){
         document.getElementById("2006").innerHTML = fdata[i].table1;
@@ -255,7 +255,7 @@ function openWin(fileName, windowName,display) {
           }
       });
       var qs = $.parseQuerystring();
-  $.getJSON("http://test.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{'spec':{'properties.HUC':'"+ qs.huc +"'},'fields':['properties']}".concat('?callback=?'), function(wsdata){
+  $.getJSON("http://data.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{'spec':{'properties.HUC':'"+ qs.huc +"'},'fields':['properties']}".concat('?callback=?'), function(wsdata){
 
 		var totalAcres = 0;
 
@@ -267,7 +267,7 @@ function openWin(fileName, windowName,display) {
 		
         document.getElementById("wsInfo").innerHTML=output;
   });
-    $.getJSON("http://test.oklahomawatersurvey.org/tools/cropland/"+ qs.huc +"/".concat('?callback=?'), function(cldata){
+    $.getJSON("http://data.oklahomawatersurvey.org/tools/cropland/"+ qs.huc +"/".concat('?callback=?'), function(cldata){
 
 		cloutput = "<ol><li><b>" + cldata[0].crop +"<b>: " + cldata[0].percent_watershed.toFixed(2) +" % <br></li>";
 		cloutput += "<li><b>" + cldata[1].crop +"<b>: " + cldata[1].percent_watershed.toFixed(2) +" % <br></li>";
