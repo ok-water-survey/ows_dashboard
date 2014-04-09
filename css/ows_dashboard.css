@@ -75,7 +75,7 @@ p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address,fieldset{margin-bottom:20px}
 .container_16 .grid_1, 
 .container_16 .grid_1 .box,
 .container_16 .grid_1 .glow-sortable-dropindicator {
-	width: 900px !important
+	width: 100% !important
 }
 
 .container_16 .grid_2, 
