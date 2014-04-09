@@ -1,3 +1,5 @@
+
+
 /* Reset */
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,
 blockquote,pre,a,abbr,acronym,address,big,cite,code,del,
@@ -5,7 +7,7 @@ dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,
 sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,
 form,label,legend,table,caption,tbody,tfoot,thead,tr,th,
 td{margin:0;padding:0;border:0;outline:0;font-size:1.0em;vertical-align:baseline}
-body{line-height:1}
+body{line-height:1;background-color: #faf8f0}
 ol,ul{list-style:none}
 blockquote,q{quotes:none}
 blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}
@@ -393,7 +395,7 @@ a.delete {
 }
 
 #head {
-	background:#313230
+	background:#1A5A80
 }
 
 #navigation a:hover {
@@ -601,13 +603,13 @@ float:left
 	color:#3298CB;
 }
 
-#impaired_content table,td, tr{
-font-size:1em;
-width:750px;
+div.tabContent table,td, tr{
+font-size:11px;
+width:550px;
 border: 1px solid black;
 margin: auto;
 }
-#impaired_content a.metadata 
+div.tabContent a.metadata 
 {   
 	color:#3298CB;
 	cursor:help;	
@@ -615,7 +617,7 @@ margin: auto;
 
 
  
-#impaired_content a.description 
+div.tabContent a.description 
 {   
 	color:#006699;
 	cursor:help;
@@ -623,35 +625,35 @@ margin: auto;
 	display: block; 	
 }
  
-#impaired_content .left
+div.tabContent .left
 { float:left; }
  
-#impaired_content .center
+div.tabContent .center
 { 
 	text-align:center;
 	margin-top:0;
  }
-#impaired_content table.center 
+div.tabContent table.center 
 { 
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
 }
  
-#impaired_content tr.top
+div.tabContent tr.top
 {
 	vertical-align: top;
 	text-align: center;
 }
-#impaired_content tr.threatened
+div.tabContent .threatened
 {	background: #FFFFC1 }
  
-#impaired_content tr.impaired
+div.tabContent .impaired
 {	background: #FAAFBE }
  
-#impaired_content tr.partial
+div.tabContent .partial
 {	background: #FFC7A0 }
  
-#impaired_content tr.unassessed
+.unassessed
 {	background: #EEEEEE }
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>Oklahoma Water Survey | Dashboard - Mouseover Info</title>
+		<script type="text/javascript" src="http://worker.oklahomawatersurvey.org/portal/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://worker.oklahomawatersurvey.org/portal/js/jquery-ui-1.8.10.custom.min.js"></script>
+		
+		
+<script>
+$(document).ready( function() {
+		
+    jQuery.extend({
+        parseQuerystring: function() {
+            var nvpair = {};
+            var qs = window.location.search.replace('?', '');
+            var pairs = qs.split('&');
+            $.each(pairs, function(i, v) {
+                var pair = v.split('=');
+                nvpair[pair[0]] = pair[1];
+            });
+            return nvpair;
+        }
+    });
+ var qs = $.parseQuerystring(); 
+ 
+ var img = document.createElement("IMG");
+	img.src = "http://test.oklahomawatersurvey.org/d2/images/wsimg/"+qs.huc+".jpg";
+	document.getElementById('wsimage').appendChild(img);
+
+ 
+$.getJSON("http://test.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{'spec':{'properties.HUC':'"+ qs.huc +"'},'fields':['properties']}".concat('?callback=?'), function(wsdata){
+
+		var totalAcres = 0;
+
+		
+		for (var i in wsdata) { totalAcres += wsdata[i].properties.ACRES; }
+        hucOutput = "<b>HUC:</b> " + wsdata[0].properties.HUC + "<br>";
+		nameOutput = "<b>Watershed Name:</b> " + wsdata[0].properties.NAME + "<br>";
+		totalArea = "<b>Total Area:</b> " + totalAcres.toFixed(0) + " Acres <br>";
+		
+        document.getElementById("hucInfo").innerHTML=hucOutput;
+        document.getElementById("nameInfo").innerHTML=nameOutput;
+        document.getElementById("areaInfo").innerHTML=totalArea;
+  });
+  
+   })
+ </script>
+
+</head>
+<body>
+	<div id="hucInfo"></div>
+	<div id="wsimage"></div>
+	<div id="nameInfo"></div>
+	<div id="areaInfo"></div>
+</body>
+</html>

@@ -1,0 +1,229 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>Oklahoma Water Survey | Dashboard</title>
+		<!--<link rel="stylesheet" href="css/ows_dashboard.css" type="text/css" media="screen" charset="utf-8" />-->
+		<!--[if IE]><![if gte IE 6]><![endif]-->
+				<script type="text/javascript" src="http://static.cybercommons.org/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/flot/jquery.flot.js"></script>
+		<script type="text/javascript" src="js/flot/jquery.flot.navigate.js"></script>
+		<script type="text/javascript" src="js/date/date.js"></script>
+		<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.flot.time.js"></script>
+		<script type="text/javascript" src="http://static.cybercommons.org/css/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="jquery.flot.hiddengraphs.js"></script>
+		<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.blockUI.js"></script>
+
+		<!--[if IE]><![endif]><![endif]-->
+		
+		
+<style>
+
+
+
+#tooltip{
+	position:absolute;
+	background:#fff;
+	display: none;
+	padding: 2px 5px;
+	border: 2px solid #000;
+}				
+			
+.placeholder{
+    width:400px;
+    height:300px;
+    margin:5px;
+}
+
+.xAxis > .tickLabel 
+{
+    margin-top:40px;
+    -moz-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    -webkit-transform:rotate(-45deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+</style>
+
+<script>
+	var qs;
+$(document).ready( function() {
+
+var mess='Loading..'
+$.blockUI({message: mess, css:{
+		border:'none', padding:'15px', backgroundColor:'#ccc',
+		'-webkit-border-radius': '10px','-moz-border-radius':'10px',opacity:0.5,color:'#fff'}});
+		
+    jQuery.extend({
+        parseQuerystring: function() {
+            var nvpair = {};
+            var qs = window.location.search.replace('?', '');
+            var pairs = qs.split('&');
+            $.each(pairs, function(i, v) {
+                var pair = v.split('=');
+                nvpair[pair[0]] = pair[1];
+            });
+            return nvpair;
+        }
+    });
+ qs = $.parseQuerystring();
+    setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&startDT=' + qs.start + '&endDT=' + qs.end + '&parameterCd=00060&siteType=ST','#combGraph0','#title0','#labeler0');
+    
+
+    
+    
+    
+    function setpage(url,flotdiv,titlediv,labeldiv){
+    var options = {
+            grid: { hoverable: true, clickable: true },
+            lines: {show: true},
+            points: {show: false},
+            xaxis: { mode:"time",timeformat: "%y/%m/%d %H:%M ",labelAngle: "45"},
+            yaxis:{invert:true, zoomRange: [0.1, 12]},
+            
+            zoom: {
+				interactive: true
+			},
+			pan: {
+				interactive: true
+			}
+           	//legend:{container: $('#labeler'),hideable:true }
+        };
+    $.getJSON('http://test.oklahomawatersurvey.org/data/proxy/?url='.concat(encodeURIComponent(url)).concat('&callback=?'),function(fdata){
+
+	
+	var comb=[];
+        var variable;
+        var sitename;
+	
+	        
+	$.each( fdata.value.timeSeries, function( key, value ) {
+            variable = value.variable.variableDescription;
+            sitename = value.sourceInfo.siteName;
+			
+            var flotdiv='placeholder';
+            if(value.values[0].value !== undefined){
+                var data={label:sitename,data:[]}
+                $.each(value.values[0].value, function (key, val){
+                    var dt=new Date(val.dateTime)
+                    data.data.push([dt,parseFloat(val.value)])
+                });
+            }else{
+                var data={label:sitename,data:null}
+            }
+            comb.push(data);
+        });
+
+        $(titlediv).append(variable);
+        options.legend={container: $(labeldiv),hideable:true}
+        $.plot(flotdiv, comb, options);
+        
+        $.unblockUI();
+        
+                //empty field check
+        if($.trim($('#title0').html()).length==0){
+			$('#combGraph0').html('No Data Available');
+		}
+    });
+	
+
+	
+
+  }
+  // Tooltip #################################################
+	function showTooltip(x, y, contents) {
+		$('<div id="tooltip">' + contents + '</div>').css({
+			top: y - 16,
+			left: x + 20
+		}).appendTo('body').fadeIn();
+	}
+
+	var previousPoint = null;
+
+	$('#combGraph0').bind('plothover', function (event, pos, item) {
+		if (item) {
+			if (previousPoint != item.dataIndex) {
+				previousPoint = item.dataIndex;
+				$('#tooltip').remove();
+
+				var x = item.datapoint[0],
+					y = item.datapoint[1].toFixed(2),
+					date = new Date(x);
+					fdate = date.toString("ddd, dd MMM yyyy HH:mm:ss");
+					showTooltip(item.pageX, item.pageY, y + ' cu.ft/s on ' + fdate +' CMT');
+			}
+		} else {
+			$('#tooltip').remove();
+			previousPoint = null;
+		}
+	});
+});
+</script>
+
+
+
+<!-- date picker -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script>
+  $(function() {
+    $( "#datepicker1" ).datepicker({ dateFormat: "yy-mm-dd" });
+     $( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+  });
+  </script>
+  <script type='text/javascript'>
+	  
+	  $(function(){
+var dateSelect = document.getElementById('dateSelect');
+var theInput1 = document.getElementById('datepicker1');
+var theInput2 = document.getElementById('datepicker2');
+
+
+dateSelect.onsubmit = function(e) {
+    var myurl = "http://test.oklahomawatersurvey.org/dashboard/streamflow.html?huc="+qs.huc+"&start="+ encodeURIComponent(theInput1.value) +"&end="+ encodeURIComponent(theInput2.value) ;
+window.history.pushState('', "Title", myurl);
+window.location.reload();
+    return false;
+
+}
+document.getElementById('datepicker1').value = qs.start;
+
+document.getElementById('datepicker2').value = qs.end;
+    
+});
+
+</script>
+
+</head>
+
+<body>
+
+
+<!--<h2>Streamflow</h2>-->
+<form style="border:0px; font-family:sans-serif; size: 12px; color: #000" id="dateSelect">
+From: <input style="border:1px; border-style:dotted; font-family:sans-serif; size: 12px; color: #4D4D4D" type="text" id="datepicker1"> To: <input style="border:1px; border-style:dotted; font-family:sans-serif; size: 12px; color: #4D4D4D" type="text" id="datepicker2">
+<input style="border:1px; border-style:dotted; font-family:sans-serif; background-color:#fff; size: 12px; color: #4D4D4D" type='submit'>
+</form><br>
+  <div style="margin-top:0px;width:100%;display:table;">
+    <div style="display:table-header-group; font-family:sans-serif; font-size: small" id='title0'></div>
+    <div style="display: table-row;width:100%;height:100%;">
+    
+      <div style="width: 70%; display: table-cell;"> 
+         <div id="combGraph0" class="placeholder"></div>
+      </div>
+      <div style="width:30%;display:table-cell;vertical-align:middle">
+      
+   <div style="font-size: 10px;  font-family:'Arial'" id='labeler0'></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</body></html>

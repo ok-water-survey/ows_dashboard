@@ -3,6 +3,8 @@
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<title>Oklahoma Water Survey | Dashboard</title>
+		<link rel=stylesheet href="http://worker.oklahomawatersurvey.org/portal/jqui/development-bundle/themes/base/jquery.ui.all.css"
+          type="text/css" media="screen, print">
 		<link rel="stylesheet" href="css/ows_dashboard.css" type="text/css" media="screen" charset="utf-8" />
 		<!--[if IE]><![if gte IE 6]><![endif]-->
 		<script src="js/glow/1.7.0/core/core.js" type="text/javascript"></script>
@@ -20,35 +22,56 @@
 				);
 			});
 		</script>
-		
-
 		<script type="text/javascript" src="http://static.cybercommons.org/js/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="js/flot/jquery.flot.js"></script>
 		<script type="text/javascript" src="js/date/date.js"></script>
 		<script type="text/javascript" src="http://static.cybercommons.org/js/jquery.flot.time.js"></script>
 		<script type="text/javascript" src="http://static.cybercommons.org/css/bootstrap/js/bootstrap.min.js"></script>
-
+		<script type="text/javascript" src="js/jquery.flot.hiddengraphs.js"></script>
+		<script type="text/javascript" src="http://worker.oklahomawatersurvey.org/portal/js/OpenLayers-2.11/OpenLayers.js"></script>
+    
+    <script type="text/javascript" src="http://worker.oklahomawatersurvey.org/portal/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://worker.oklahomawatersurvey.org/portal/js/jquery-ui-1.8.10.custom.min.js"></script>
+    <script src="google.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false&key=AIzaSyB1OApFshSYU6P8eUk7BpF6_oPMD9Du8yI"></script>
 		<!--[if IE]><![endif]><![endif]-->
 
 
-<style>
-.placeholder{
-    width:400px;
-    height:300px;
-    margin:5px;
-}
-.xAxis > .tickLabel 
-{
-    margin-top:40px;
-    -moz-transform:rotate(-45deg);
-    -o-transform:rotate(-45deg);
-    -webkit-transform:rotate(-45deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-</style>
 
-
+    <style type="text/css">
+		/*body {background-color: #E8E5C7; font-family: sans-serif;}*/
+      /*body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }*/
+      ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0 0; width: 100%; border-bottom: 1px solid #c9c3ba;}
+      ul#tabs li { display: inline; }
+      ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: 0px; width: 100%; padding: 10px 20px 0 20px; text-decoration: none; }
+      ul#tabs li a:hover { background-color: #f1f0ee; }
+      ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 10px 20px 0 20px; }
+      /*div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }*/
+      div.tabContent.hide { display: none; }
+      /*.impaired{background-color:#ff99cc;}
+      .good{background-color:#99ffcc;}*/
+      
+      
+      .smallmap {
+    width: 700px;
+    height: 300px;
+    border: 0px;
+    </style>
+    
+    
 <script>
+  // Resize iframe to full height
+  function resizeIframe(height)
+  {
+    // "+60" is a general rule of thumb to allow for differences in
+    // IE & and FF height reporting, can be adjusted as required..
+    document.getElementById('streamframe').height = parseInt(height)+60;
+    document.getElementById('gageframe').height=parseInt(height)+60;
+    document.getElementById('groundframe').height=parseInt(height)+60;
+  }
+</script>
+<script>
+var qs;
 $(document).ready( function() {
     jQuery.extend({
         parseQuerystring: function() {
@@ -65,14 +88,14 @@ $(document).ready( function() {
 
 
 
-    var qs = $.parseQuerystring();
+    qs = $.parseQuerystring();
     //11090203,11090204,11090106,11090103,11090201,11090202
     //gw 72019
     //stream discharge 00060 gage height ft 00065
-	$('#watershedMap').append("<div><iframe width='700px' height='300px' frameborder='0' src='http://watersgeo.epa.gov/mwm/mwmlite.html?layer=LEGACY_WBD&feature=" + qs.huc +"'/><div id='blockClick' style='position: absolute; top: 0; left: 0; width: 700px; height: 400px'></div></div>"); 
-    setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00060&siteType=ST','#combGraph','#title','#labeler');
-    setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=00065&siteType=ST','#combGraph1','#title1','#labeler1');
-    setpage('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '&period=P' + qs.day + 'D&parameterCd=72019','#combGraph2','#title2','#labeler2');
+	//$('#watershedMap').append("<div><iframe width='700px' height='300px' frameborder='0' src='http://watersgeo.epa.gov/mwm/mwmlite.html?layer=LEGACY_WBD&feature=" + qs.huc +"'/><div id='blockClick' style='position: absolute; top: 0; left: 0; width: 700px; height: 400px'></div></div>"); 
+	$('#streamFlow').append("<div><iframe id='streamframe' width='100%' height='450px' src='streamflow.html?huc=" + qs.huc +"&start=" + qs.start + "&end=" + qs.end + "' scrolling='no' marginwidth='0' marginheight='0'></iframe></div>"); 
+ 	$('#gageHeight').append("<div><iframe id='gageframe' width='100%' height='450px' src='gageheight.html?huc=" + qs.huc +"&start=" + qs.start + "&end=" + qs.end + "' scrolling='no' marginwidht='0' marginheight='0'/></iframe></div>"); 
+	$('#groundWater').append("<div><iframe id='groundframe' width='100%' height='450px' src='groundwater.html?huc=" + qs.huc +"&start=" + qs.start + "&end=" + qs.end + "' scrolling='no' marginwidht='0' marginheight='0'/></iframe></div>"); 
 	
   function setpage(url,flotdiv,titlediv,labeldiv){
     var options = {
@@ -159,6 +182,21 @@ $(document).ready( function() {
 	
 });
 </script>
+
+
+    
+    		
+
+
+<script>
+	<!-- impairement tab-->
+  $(function() {
+    $( "#tabs" ).tabs({ selected: 1 });
+
+  });
+</script>	
+
+
 <script>
 //*get impaired value 
   $(document).ready( function() {
@@ -176,20 +214,30 @@ $(document).ready( function() {
       });
       var qs = $.parseQuerystring();
     $.getJSON("http://test.oklahomawatersurvey.org/mongo/db_find/ows/impaired_waters/{'spec':{'huc':'" + qs.huc +"'}}".concat('?callback=?'),function(fdata){
-        $.each( fdata[0], function( key, value ) {
-            if(key.indexOf('table')!==-1){
-                $('#impaired_content').append(value);
-            }
+        for (var i in fdata) { 
+        if (fdata[i].tmdl_year == 2006){
+        document.getElementById("2006").innerHTML = fdata[i].table1;
+        }
+        else if (fdata[i].tmdl_year == 2008){
+        document.getElementById("2008").innerHTML = fdata[i].table1;
+        }
+		else if (fdata[i].tmdl_year == 2010){
+        document.getElementById("2010").innerHTML = fdata[i].table1;
+        }
+        else if (fdata[i].tmdl_year == 2012){
+        document.getElementById("2012").innerHTML = fdata[i].table1;
+        }
+        }
+
         });
     });    
  
  
-});
 function openWin(fileName, windowName,display) {
     window.open(fileName,windowName,display);
   }
-</script>
 
+</script>
 
 
 <script>
@@ -258,7 +306,7 @@ function openWin(fileName, windowName,display) {
 <table>
 <tbody>
 <tr>
-<div style="padding: auto, margin: auto, width: 100%" id="watershedMap"></div>
+<div id="map" class="smallmap"></div>
 
 </tr>
 </tbody>
@@ -288,17 +336,7 @@ function openWin(fileName, windowName,display) {
 							<tbody>
 								<tr>
 
-  <div style="margin-top:10px;width:100%; display: table;">
-    <div style="display:table-header-group" id='title'></div>
-    <div style="display: table-row;width:100%;height:100%">
-      <div style="width: 70%; display: table-cell;"> 
-         <div id="combGraph" class="placeholder"></div>
-      </div>
-      <div style="width:30%;display:table-cell;vertical-align:middle">
-         <div style="font-size: 10px; " id='labeler'></div>
-      </div>
-    </div>
-  </div>
+<div style="padding: auto, margin: auto, width: 100%" id="streamFlow"></div>
 
 					</tr></tbody></table>
 
@@ -312,21 +350,7 @@ function openWin(fileName, windowName,display) {
 						<table>
 							<tbody>
 								<tr>
-
-  <div style="margin-top:10px;width:100%; display: table; border: 0px">
-      <div id="title1"></div>
-	  		   
-      <div style="display: table-row;width:100%;height:100%;border:0px">
-        <div style="width: 70%; display: table-cell;">
-           <div id="combGraph1" class="placeholder"></div>
-
-
-        </div>
-        <div style="width:30%;display:table-cell;vertical-align:middle">
-           <div style="font-size: 10px;" id='labeler1'></div>
-        </div>
-      </div>
-  </div>
+<div style="padding: auto, margin: auto, width: 100%" id="gageHeight"></div>
 					</tr></tbody></table>
 </div>
 
@@ -339,18 +363,7 @@ function openWin(fileName, windowName,display) {
 						<table>
 							<tbody>
 								<tr>
-<div style="width:100%;display:table;">
-        <div style="display:table-header-group" id='title2'></div>
-        <div style="display: table-row;width:100%;height:100%">
-          <div style="width: 70%; display: table-cell;">
-             <div id="combGraph2" class="placeholder"></div>
-			 
-          </div>
-          <div style="width:30%;display:table-cell;vertical-align:middle;">
-             <div style="" id='labeler2'></div>
-          </div>
-        </div>
-    </div>
+<div style="padding: auto, margin: auto, width: 100%" id="groundWater"></div>
 					</tr></tbody></table>
 </div>
 
@@ -359,7 +372,7 @@ function openWin(fileName, windowName,display) {
 
 					<div class="box">
 
-<h2>Top 10 Land Cover Types</h2>
+<h2>2012 Top 10 Land Cover Types</h2>
 						<table>
 <tbody>
 <tr>
@@ -376,29 +389,30 @@ function openWin(fileName, windowName,display) {
 					<div class="box">
 
 
-					<h2>EPA Impaired Water (2010)</h2>
-
-<div id="impaired_content" style="width:100%; align: left"></div>
-
+					<h2>EPA Impaired Water</h2>
+					
 
 
 
-</div>						
-						</div>
-						
-				
+<div id="tabs">
+  <ul>
+    <li><a href="#2012">2012</a></li>
+    <li><a href="#2010">2010</a></li>
+    <li><a href="#2008">2008</a></li>
+    <li><a href="#2006">2006</a></li>
+  </ul>
+	<div id="2012" class="tabContent"></div>
+	<div id="2010" class="tabContent"></div>
+	<div id="2008" class="tabContent"></div>
+	<div id="2006" class="tabContent"></div>
+</div>
 
-						
-						
-							</div>
 
-		<!--<div id="foot">
-			<div class="container_16 clearfix">
-				<div class="grid_16">
-					Oklahoma Water Survey
-				</div>
-			</div>
-		</div>-->
+
+</div></div>
+</div>
+
+
 
 	</body>
 	
