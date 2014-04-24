@@ -258,11 +258,11 @@ function openWin(fileName, windowName,display) {
   $.getJSON("http://data.oklahomawatersurvey.org/mongo/db_find/ows/watersheds/{'spec':{'properties.HUC':'"+ qs.huc +"'},'fields':['properties']}".concat('?callback=?'), function(wsdata){
 
 		var totalAcres = 0;
+		var wshedName = wsdata[0].properties.NAME;
 
-		
 		for (var i in wsdata) { totalAcres += wsdata[i].properties.ACRES; }
-        output = "<b>HUC:</b> " + wsdata[0].properties.HUC + "<br>";
-		output += "<b>Name:</b> " + wsdata[0].properties.NAME + "<br>";
+		output = "<b>HUC:</b> " + wsdata[0].properties.HUC + "<br>";
+		output += "<b>Name:</b> " + wshedName.substring(14) + "<br>";
 		output += "<b>Total Acreage:</b> " + totalAcres.toFixed(0) + " Acres <br>";
 		
         document.getElementById("wsInfo").innerHTML=output;

@@ -118,7 +118,7 @@ div.clue-bottom-default .cluetip-arrows {
   background-color: #fff;
 }
 .cluetip-jtip .cluetip-outer {
-  border: 2px solid #ccc;
+  border: 5px solid #ccc;
   position: relative;
   /*background-color: #fff;*/
 }

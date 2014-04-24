@@ -151,7 +151,7 @@ $.getJSON('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '
 					y = item.datapoint[1].toFixed(2),
 					date = new Date(x);
 					fdate = date.toString("ddd, dd MMM yyyy HH:mm:ss");
-					showTooltip(item.pageX, item.pageY, y + ' cu.ft/s on ' + fdate +' CMT');
+					showTooltip(item.pageX, item.pageY, y + ' cu.ft/s on ' + fdate +' GMT-6');
 			}
 		} else {
 			$('#tooltip').remove();
@@ -169,8 +169,8 @@ $.getJSON('http://waterservices.usgs.gov/nwis/iv/?format=json&huc=' + qs.huc + '
   <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script>
   $(function() {
-    $( "#datepicker1" ).datepicker({ dateFormat: "yy-mm-dd" });
-     $( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+    $( "#datepicker1" ).datepicker({ dateFormat: "yy-mm-dd" , maxDate:"0", minDate:"-120D"});
+     $( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" ,maxDate:"0", minDate:"-120D"});
   });
   </script>
   <script type='text/javascript'>
@@ -203,7 +203,7 @@ document.getElementById('datepicker2').value = qs.end;
 
 <!--<h2>Streamflow</h2>-->
 <form style="border:0px; font-family:sans-serif; size: 12px; color: #000" id="dateSelect">
-From: <input style="border:1px; border-style:dotted; font-family:sans-serif; size: 12px; color: #4D4D4D" type="text" id="datepicker1"> To: <input style="border:1px; border-style:dotted; font-family:sans-serif; size: 12px; color: #4D4D4D" type="text" id="datepicker2">
+From: <input style="border:1px; border-style:dotted; font-family:sans-serif; size: 12px; color: #4D4D4D" type="text" id="datepicker1" readonly="readonly"> To: <input style="border:1px; border-style:dotted; font-family:sans-serif; size: 12px; color: #4D4D4D" type="text" id="datepicker2" readonly="readonly">
 <input style="border:1px; border-style:dotted; font-family:sans-serif; background-color:#fff; size: 12px; color: #4D4D4D" type='submit'>
 </form><br>
   <div style="margin-top:0px;width:100%;display:table;">
